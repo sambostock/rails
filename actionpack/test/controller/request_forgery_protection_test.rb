@@ -1024,3 +1024,49 @@ class SkipProtectionControllerTest < ActionController::TestCase
     assert_response :success
   end
 end
+
+class ParentController < ActionController::Base
+  include RequestForgeryProtectionActions
+  protect_from_forgery with: :exception
+
+  def parent_action
+    render plain: 'parent'
+  end
+end
+
+class ChildController < ParentController
+  protect_from_forgery only: %w(null_session_action), with: :null_session
+
+  def default_action
+    render plain: 'default'
+  end
+
+  def null_session_action
+    render plain: 'null_session'
+  end
+end
+
+class ParentControllerTest < ActionController::TestCase
+  def test_parent_action_raises
+    assert_raises(ActionController::InvalidAuthenticityToken) do
+      get :parent_action
+    end
+  end
+end
+
+class ChildControllerTest < ActionController::TestCase
+  def test_default_action_raises
+    assert_raises(ActionController::InvalidAuthenticityToken) do
+      get :default_action
+    end
+  end
+
+  def test_null_session_action_has_null_session
+    session[:something_like_user_id] = 1
+
+    get :null_session_action
+
+    assert_nil session[:something_like_user_id], "session values are still present"
+    assert_response :success
+  end
+end
