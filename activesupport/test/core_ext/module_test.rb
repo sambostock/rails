@@ -557,4 +557,38 @@ class ModuleTest < ActiveSupport::TestCase
     assert_equal [:the_street, :the_city],
       location.delegate(:street, :city, to: :@place, prefix: :the, private: true)
   end
+
+  def test_private_constants_automatically_marks_constants_as_private
+    other = Module.new
+
+    mod = Module.new do
+      const_set(:PUBLIC_BEFORE, :public_before)
+
+      private_constants do
+        const_set(:PRIVATE, :private)
+
+        other.const_set(:OTHER, :other)
+      end
+
+      const_set(:PUBLIC_AFTER, :public_after)
+    end
+
+    # Existing constants are unaffected
+    assert_includes mod.constants, :PUBLIC_BEFORE
+    assert_equal :public_before, mod::PUBLIC_BEFORE
+
+    # Constants defined within the this module are privatized
+    assert_not_includes mod.constants, :PRIVATE
+    assert_raises(NameError) { mod::PRIVATE }
+    # Although private, the value should still be correct
+    assert_equal :private, mod.const_get(:PRIVATE)
+
+    # Constants explicitly defined in another module are unaffected
+    assert_includes other.constants, :OTHER
+    assert_equal :other, other::OTHER
+
+    # Subsequent constants are unaffected
+    assert_includes mod.constants, :PUBLIC_AFTER
+    assert_equal :public_after, mod::PUBLIC_AFTER
+  end
 end

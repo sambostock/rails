@@ -1,3 +1,41 @@
+*   Add `Module#private_constants`
+
+    Mark all constants defined within the block as private
+
+    ```ruby
+    module M
+      private_constants do
+        Foo = 123
+        Bar = 456
+      end
+
+      # instead of
+
+      Foo = 123
+      Bar = 456
+      private_constants :Foo, :Bar
+    end
+    ```
+
+    Note that constants explicitly defined in another namespace will not be privatized
+
+    ```ruby
+    module Other
+    end
+
+    module M
+      private_constants do
+        Other::Foo = 123
+        Bar = 456
+      end
+    end
+
+    Other::Foo # => 123
+    M::Bar     # => NameError
+    ```
+
+    *Sam Bostock*
+
 *   `require_dependency` has been documented to be _obsolete_ in `:zeitwerk`
     mode. The method is not deprecated as such (yet), but applications are
     encouraged to not use it.
