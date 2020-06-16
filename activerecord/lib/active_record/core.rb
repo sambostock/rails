@@ -137,7 +137,7 @@ module ActiveRecord
 
       class_attribute :default_pool_key, instance_writer: false
 
-      class_attribute :allow_dynamic_matchers, instance_writer: false, default: true
+      class_attribute :allow_dynamic_matchers, instance_accessor: false, default: true
 
       self.filter_attributes = []
 

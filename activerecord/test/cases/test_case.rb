@@ -88,6 +88,20 @@ module ActiveRecord
       ActiveRecord::Base.has_many_inversing = old
     end
 
+    def with_allow_dynamic_matchers(value, model)
+      was_undefined = !model.instance_variable_defined?(:@allow_dynamic_matchers)
+      old = model.allow_dynamic_matchers if was_undefined
+      model.allow_dynamic_matchers = value
+      yield
+    ensure
+      if was_undefined
+        # If the value was undefined, we must remove it so class_attribute will fall back to super
+        model.remove_instance_variable(:@allow_dynamic_catchers)
+      else
+        model.allow_dynamic_matchers = old
+      end
+    end
+
     def reset_callbacks(klass, kind)
       old_callbacks = {}
       old_callbacks[klass] = klass.send("_#{kind}_callbacks").dup

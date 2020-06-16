@@ -53,6 +53,32 @@ class FinderRespondToTest < ActiveRecord::TestCase
     assert_not_respond_to Topic, :find_or_create_by_title?
   end
 
+  def test_should_not_respond_to_find_by_with_globally_disallowed_dynamic_matchers
+    with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
+      assert_not_respond_to Topic, :find_by_title
+    end
+  end
+
+  def test_should_not_respond_to_find_by_with_granularly_disallowed_dynamic_matchers
+    with_allow_dynamic_matchers(false, model: Topic) do
+      assert_not_respond_to Topic, :find_by_title
+    end
+  end
+
+  def test_should_respond_to_find_by_with_granularly_allowed_dynamic_matchers
+    with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
+      with_allow_dynamic_matchers(true, model: Topic) do
+        assert_respond_to Topic, :find_by_title
+      end
+    end
+  end
+
+  def test_should_respond_to_find_by_with_dynamic_matcher_warnings
+    with_allow_dynamic_matchers(:warn, model: Topic) do
+      assert_respond_to Topic, :find_by_title
+    end
+  end
+
   private
     def ensure_topic_method_is_not_cached(method_id)
       Topic.singleton_class.remove_method method_id if Topic.public_methods.include? method_id

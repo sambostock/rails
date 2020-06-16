@@ -1267,6 +1267,48 @@ class FinderTest < ActiveRecord::TestCase
     assert_equal "Mary", topic.author_name
   end
 
+  def test_find_by_with_globally_disallowed_dynamic_finders
+    with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
+      error = assert_raises(NoMethodError) { Topic.find_by_title }
+      assert_match /undefined method `find_by_title'/, error.message
+    end
+  end
+
+  def test_find_by_with_granularly_disallowed_dynamic_finders
+    with_allow_dynamic_matchers(false, model: Topic) do
+      error = assert_raises(NoMethodError) { Topic.find_by_title }
+      assert_match /undefined method `find_by_title'/, error.message
+    end
+  end
+
+  def test_find_by_with_specially_allowed_dynamic_finders
+    with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
+      with_allow_dynamic_matchers(true, model: Topic) do
+        assert_equal topics(:first), Topic.find_by_title('The First Topic')
+      end
+    end
+  end
+
+  def test_find_by_with_dynamic_matcher_warnings
+    with_allow_dynamic_matchers(:warn, model: Topic) do
+      assert_deprecated(
+        "Usage of dynamic matchers, like find_by_title, is deprecated for Topic. Use find_by instead.",
+      ) do
+        assert_equal topics(:first), Topic.find_by_title('The First Topic')
+      end
+    end
+  end
+
+  def test_find_by_with_overriden_dynamic_matcher_warnings
+    with_allow_dynamic_matchers(:warn, model: ActiveRecord::Base) do
+      with_allow_dynamic_matchers(:true, model: Topic) do
+        assert_not_deprecated do
+          assert_equal topics(:first), Topic.find_by_title('The First Topic')
+        end
+      end
+    end
+  end
+
   def test_find_with_bad_sql
     assert_raise(ActiveRecord::StatementInvalid) { Topic.find_by_sql "select 1 from badtable" }
   end
