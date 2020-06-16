@@ -1270,8 +1270,8 @@ class FinderTest < ActiveRecord::TestCase
   def test_find_by_with_globally_disallowed_dynamic_matchers
     ensure_topic_method_is_not_cached(:find_by_title)
     with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
-      error = assert_raises(NoMethodError) { Topic.find_by_title('The First Topic') }
-      assert_match /undefined method `find_by_title'/, error.message
+      error = assert_raises(NoMethodError) { Topic.find_by_title("The First Topic") }
+      assert_match(/undefined method `find_by_title'/), error.message
     end
   end
 
@@ -1279,8 +1279,8 @@ class FinderTest < ActiveRecord::TestCase
     ensure_topic_method_is_not_cached(:find_by_title)
     with_allow_dynamic_matchers(false, model: Topic) do
       assert_equal false, Topic.allow_dynamic_matchers
-      error = assert_raises(NoMethodError) { Topic.find_by_title('The First Topic') }
-      assert_match /undefined method `find_by_title'/, error.message
+      error = assert_raises(NoMethodError) { Topic.find_by_title("The First Topic") }
+      assert_match(/undefined method `find_by_title'/), error.message
     end
   end
 
@@ -1288,7 +1288,7 @@ class FinderTest < ActiveRecord::TestCase
     ensure_topic_method_is_not_cached(:find_by_title)
     with_allow_dynamic_matchers(false, model: ActiveRecord::Base) do
       with_allow_dynamic_matchers(true, model: Topic) do
-        assert_equal topics(:first), Topic.find_by_title('The First Topic')
+        assert_equal topics(:first), Topic.find_by_title("The First Topic")
       end
     end
     ensure_topic_method_is_not_cached(:find_by_title)
@@ -1300,7 +1300,7 @@ class FinderTest < ActiveRecord::TestCase
       assert_deprecated(
         "Usage of dynamic matchers, like find_by_title, is deprecated for Topic. Use find_by instead.",
       ) do
-        assert_equal topics(:first), Topic.find_by_title('The First Topic')
+        assert_equal topics(:first), Topic.find_by_title("The First Topic")
       end
     end
     ensure_topic_method_is_not_cached(:find_by_title)
@@ -1311,7 +1311,7 @@ class FinderTest < ActiveRecord::TestCase
     with_allow_dynamic_matchers(:warn, model: ActiveRecord::Base) do
       with_allow_dynamic_matchers(:true, model: Topic) do
         assert_not_deprecated do
-          assert_equal topics(:first), Topic.find_by_title('The First Topic')
+          assert_equal topics(:first), Topic.find_by_title("The First Topic")
         end
       end
     end
