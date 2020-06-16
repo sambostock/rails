@@ -1291,6 +1291,7 @@ class FinderTest < ActiveRecord::TestCase
         assert_equal topics(:first), Topic.find_by_title('The First Topic')
       end
     end
+    ensure_topic_method_is_not_cached(:find_by_title)
   end
 
   def test_find_by_with_dynamic_matcher_warnings
@@ -1302,6 +1303,7 @@ class FinderTest < ActiveRecord::TestCase
         assert_equal topics(:first), Topic.find_by_title('The First Topic')
       end
     end
+    ensure_topic_method_is_not_cached(:find_by_title)
   end
 
   def test_find_by_with_overriden_dynamic_matcher_warnings
@@ -1313,6 +1315,7 @@ class FinderTest < ActiveRecord::TestCase
         end
       end
     end
+    ensure_topic_method_is_not_cached(:find_by_title)
   end
 
   def test_find_with_bad_sql
