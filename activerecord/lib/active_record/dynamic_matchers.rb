@@ -4,6 +4,8 @@ module ActiveRecord
   module DynamicMatchers #:nodoc:
     private
       def respond_to_missing?(name, _)
+        return super unless allow_dynamic_matchers?
+
         if self == Base
           super
         else
@@ -13,6 +15,8 @@ module ActiveRecord
       end
 
       def method_missing(name, *arguments, &block)
+        return super unless allow_dynamic_matchers?
+
         match = Method.match(self, name)
 
         if match && match.valid?
@@ -70,7 +74,13 @@ module ActiveRecord
 
         private
           def body
-            "#{finder}(#{attributes_hash})"
+            <<~BODY.chomp
+              ActiveSupport::Deprecation.warn(
+                "Usage of dynamic matchers, like #{name}, is deprecated for #{model}. Use #{finder} instead.",
+              ) if allow_dynamic_matchers == :warn
+
+              #{finder}(#{attributes_hash})
+            BODY
           end
 
           # The parameters in the signature may have reserved Ruby words, in order
