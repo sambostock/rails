@@ -1,3 +1,40 @@
+*   Add customizable setting to allow_dynamic_matchers
+
+    By default, dynamic matchers are allowed
+
+    ```ruby
+    ActiveRecord::Base.allow_dynamic_matchers? # => true
+    # Set globally via config.active_record.allow_dynamic_matchers
+
+    Post.find_by_title('abc')
+    # => #<Post id: 1, title: "abc">
+    ```
+
+    Override globally in config, or by setting per-model
+
+    ```ruby
+    class Post < ApplicationRecord
+      self.allow_dynamic_matchers = false
+    end
+
+    Post.find_by_title('abc')
+    # NoMethodError: undefined method `find_by_title' for Post(id: integer, title: string):Class
+    ```
+
+    Set to :warn to get a deprecation warning instead
+
+    ```ruby
+    class Post < ApplicationRecord
+      self.allow_dynamic_matchers = :warn
+    end
+
+    Post.find_by_title('abc')
+    # DEPRECATION WARNING: Usage of dynamic matchers, like find_by_title, is deprecated for Post. Use find_by instead.
+    # => #<Post id: 1, title: "abc">
+    ```
+
+    *Sam Bostock*
+
 *   Deprecate `map!` and `collect!` on `ActiveRecord::Result`.
 
     *Ryuta Kamizono*
