@@ -88,16 +88,20 @@ module ActiveRecord
       ActiveRecord::Base.has_many_inversing = old
     end
 
-    def with_allow_dynamic_matchers(value, model)
-      was_undefined = !model.instance_variable_defined?(:@allow_dynamic_matchers)
-      old = model.allow_dynamic_matchers if was_undefined
+    def with_allow_dynamic_matchers(value, model:)
+      # method_defined? only accepts second parameter as of Ruby 2.6, so use methods(false) instead
+      method_previously_undefined = !model.methods(false).include?(:allow_dynamic_matchers)
+
+      old = model.allow_dynamic_matchers
       model.allow_dynamic_matchers = value
       yield
     ensure
-      if was_undefined
-        # If the value was undefined, we must remove it so class_attribute will fall back to super
-        model.remove_instance_variable(:@allow_dynamic_catchers)
+      if method_previously_undefined
+        # class_attribute (re)defines getter each time setter is used
+        # undefine method to restore super behaviour
+        model.singleton_class.remove_method(:allow_dynamic_matchers)
       else
+        # if the method already existed, we can safely use the setter
         model.allow_dynamic_matchers = old
       end
     end
