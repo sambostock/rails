@@ -90,7 +90,7 @@ module ActiveModel
     end
 
     def type_cast(*)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     def initialized?

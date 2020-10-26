@@ -67,7 +67,7 @@ module ActiveStorage
     # Upload the +io+ to the +key+ specified. If a +checksum+ is provided, the service will
     # ensure a match when the upload has completed or raise an ActiveStorage::IntegrityError.
     def upload(key, io, checksum: nil, **options)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Update metadata for the file identified by +key+ in the service.
@@ -78,12 +78,12 @@ module ActiveStorage
 
     # Return the content of the file at the +key+.
     def download(key)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Return the partial content in the byte +range+ of the file at the +key+.
     def download_chunk(key, range)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     def open(*args, **options, &block)
@@ -92,17 +92,17 @@ module ActiveStorage
 
     # Delete the file at the +key+.
     def delete(key)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Delete files at keys starting with the +prefix+.
     def delete_prefixed(prefix)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Return +true+ if a file exists at the +key+.
     def exist?(key)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Returns the URL for the file at the +key+. This returns a permanent URL for public files, and returns a
@@ -129,7 +129,7 @@ module ActiveStorage
     # You must also provide the +content_type+, +content_length+, and +checksum+ of the file
     # that will be uploaded. All these attributes will be validated by the service upon upload.
     def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:)
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     # Returns a Hash of headers for +url_for_direct_upload+ requests.
@@ -143,11 +143,11 @@ module ActiveStorage
 
     private
       def private_url(key, expires_in:, filename:, disposition:, content_type:, **)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       def public_url(key, **)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
 

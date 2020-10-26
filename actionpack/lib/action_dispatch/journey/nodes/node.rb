@@ -36,7 +36,7 @@ module ActionDispatch
         end
 
         def type
-          raise NotImplementedError
+          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
         end
 
         def symbol?; false; end

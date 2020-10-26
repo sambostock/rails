@@ -26,7 +26,7 @@ module ActionView
     end
 
     def render
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     module ObjectRendering # :nodoc:

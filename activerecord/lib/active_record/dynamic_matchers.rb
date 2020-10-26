@@ -39,7 +39,7 @@ module ActiveRecord
           end
 
           def prefix
-            raise NotImplementedError
+            raise NotImplementedError, "USEFUL_MESSAGE_HERE"
           end
 
           def suffix
@@ -86,7 +86,7 @@ module ActiveRecord
           end
 
           def finder
-            raise NotImplementedError
+            raise NotImplementedError, "USEFUL_MESSAGE_HERE"
           end
       end
 

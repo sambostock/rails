@@ -1130,7 +1130,7 @@ module ActiveRecord
       # Returns an array of check constraints for the given table.
       # The check constraints are represented as CheckConstraintDefinition objects.
       def check_constraints(table_name)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       # Adds a new check constraint to the table. +expression+ is a String
@@ -1624,11 +1624,11 @@ module ActiveRecord
         end
 
         def data_source_sql(name = nil, type: nil)
-          raise NotImplementedError
+          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
         end
 
         def quoted_scope(name = nil, type: nil)
-          raise NotImplementedError
+          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
         end
     end
   end

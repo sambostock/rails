@@ -11,19 +11,19 @@ module ActionCable
       end
 
       def broadcast(channel, payload)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       def subscribe(channel, message_callback, success_callback = nil)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       def unsubscribe(channel, message_callback)
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       def shutdown
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       def identifier

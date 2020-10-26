@@ -24,7 +24,7 @@ module ActiveStorage
 
     # Override this method in a concrete subclass. Have it return a Hash of metadata.
     def metadata
-      raise NotImplementedError
+      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
 
     private

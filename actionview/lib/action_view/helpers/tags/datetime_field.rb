@@ -15,7 +15,7 @@ module ActionView
 
         private
           def format_date(value)
-            raise NotImplementedError
+            raise NotImplementedError, "USEFUL_MESSAGE_HERE"
           end
 
           def datetime_value(value)

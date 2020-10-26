@@ -163,13 +163,13 @@ module ActiveRecord
       # The two drivers have slightly different ways of yielding hashes of results, so
       # this method must be implemented to provide a uniform interface.
       def each_hash(result) # :nodoc:
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       # Must return the MySQL error number from the exception, if the exception has an
       # error number.
       def error_number(exception) # :nodoc:
-        raise NotImplementedError
+        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
       end
 
       # REFERENTIAL INTEGRITY ====================================
@@ -447,7 +447,7 @@ module ActiveRecord
             CheckConstraintDefinition.new(table_name, expression, options)
           end
         else
-          raise NotImplementedError
+          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
         end
       end
 

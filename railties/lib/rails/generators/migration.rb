@@ -28,7 +28,7 @@ module Rails
         end
 
         def next_migration_number(dirname)
-          raise NotImplementedError
+          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
         end
       end
 

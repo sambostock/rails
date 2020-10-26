@@ -52,7 +52,7 @@ module ActiveJob
     end
 
     def perform(*)
-      fail NotImplementedError
+      fail NotImplementedError, "USEFUL_MESSAGE_HERE"
     end
   end
 end
