@@ -68,7 +68,7 @@ module Rails
       def test_notification_on_raise
         logger = TestLogger.new do
           # using an exception class that is not a StandardError subclass on purpose
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
 
         assert_difference("subscriber.starts.length") do

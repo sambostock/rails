@@ -28,7 +28,7 @@ module Rails
         end
 
         def next_migration_number(dirname)
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
       end
 

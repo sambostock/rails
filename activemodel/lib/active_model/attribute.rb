@@ -90,7 +90,7 @@ module ActiveModel
     end
 
     def type_cast(*)
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class} must implement ##{__method__}"
     end
 
     def initialized?

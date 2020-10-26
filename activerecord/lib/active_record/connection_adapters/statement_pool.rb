@@ -53,7 +53,7 @@ module ActiveRecord
         end
 
         def dealloc(stmt)
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
     end
   end

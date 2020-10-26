@@ -35,7 +35,7 @@ module ActiveStorage
         # Returns an open Tempfile containing a transformed image in the given +format+.
         # All subclasses implement this method.
         def process(file, format:) #:doc:
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
     end
   end

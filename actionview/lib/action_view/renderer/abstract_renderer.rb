@@ -26,7 +26,7 @@ module ActionView
     end
 
     def render
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class} must implement ##{__method__}"
     end
 
     module ObjectRendering # :nodoc:

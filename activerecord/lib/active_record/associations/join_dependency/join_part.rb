@@ -42,7 +42,7 @@ module ActiveRecord
 
         # An Arel::Table for the active_record
         def table
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
 
         def extract_record(row, column_names_with_alias)

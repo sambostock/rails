@@ -58,7 +58,7 @@ module ActiveRecord::Associations::Builder # :nodoc:
     end
 
     def self.macro
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class} must implement ##{__method__}"
     end
 
     def self.valid_options(options)
@@ -117,7 +117,7 @@ module ActiveRecord::Associations::Builder # :nodoc:
     end
 
     def self.valid_dependent_options
-      raise NotImplementedError
+      raise NotImplementedError, "#{self.class} must implement ##{__method__}"
     end
 
     def self.check_dependent_options(dependent, model)

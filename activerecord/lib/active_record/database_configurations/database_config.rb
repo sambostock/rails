@@ -21,7 +21,7 @@ module ActiveRecord
       deprecate spec_name: "please use name instead"
 
       def config
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def adapter_method
@@ -29,43 +29,43 @@ module ActiveRecord
       end
 
       def host
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def database
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def _database=(database)
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def adapter
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def pool
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def checkout_timeout
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def reaping_frequency
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def idle_timeout
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def replica?
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def migrations_paths
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       def for_current_env?
@@ -73,7 +73,7 @@ module ActiveRecord
       end
 
       def schema_cache_path
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
     end
   end

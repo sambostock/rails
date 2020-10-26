@@ -251,7 +251,7 @@ module ActiveRecord
 
       # Does the database for this adapter exist?
       def self.database_exists?(config)
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class} must implement ##{__method__}"
       end
 
       # Does this adapter support DDL rollbacks in transactions? That is, would

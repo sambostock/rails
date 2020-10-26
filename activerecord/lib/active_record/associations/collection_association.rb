@@ -406,7 +406,7 @@ module ActiveRecord
         # using one of the methods +:destroy+, +:delete_all+
         # or +:nullify+ (or +nil+, in which case a default is used).
         def delete_records(records, method)
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
 
         def replace_records(new_target, original_target)

@@ -36,7 +36,7 @@ module ActionDispatch
         end
 
         def type
-          raise NotImplementedError
+          raise NotImplementedError, "#{self.class} must implement ##{__method__}"
         end
 
         def symbol?; false; end

@@ -52,7 +52,7 @@ module ActiveJob
     end
 
     def perform(*)
-      fail NotImplementedError
+      fail NotImplementedError, "#{self.class} must implement ##{__method__}"
     end
   end
 end

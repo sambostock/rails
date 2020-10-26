@@ -15,7 +15,7 @@ module ActionView
 
         private
           def format_date(value)
-            raise NotImplementedError
+            raise NotImplementedError, "#{self.class} must implement ##{__method__}"
           end
 
           def datetime_value(value)
