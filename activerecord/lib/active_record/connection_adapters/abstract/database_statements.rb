@@ -109,7 +109,7 @@ module ActiveRecord
 
       # Determines whether the SQL statement is a write query.
       def write_query?(sql)
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       # Executes the SQL statement in the context of this connection and returns
@@ -118,14 +118,14 @@ module ActiveRecord
       # method may be manually memory managed. Consider using the exec_query
       # wrapper instead.
       def execute(sql, name = nil)
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       # Executes +sql+ statement in the context of this connection using
       # +binds+ as the bind substitutes. +name+ is logged along with
       # the executed +sql+ statement.
       def exec_query(sql, name = "SQL", binds = [], prepare: false)
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       # Executes insert +sql+ statement in the context of this connection using
@@ -155,7 +155,7 @@ module ActiveRecord
       end
 
       def explain(arel, binds = []) # :nodoc:
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       # Executes an INSERT query and returns the new record's ID

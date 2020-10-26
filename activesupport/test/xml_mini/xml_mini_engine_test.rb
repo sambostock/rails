@@ -235,7 +235,7 @@ class XMLMiniEngineTest < ActiveSupport::TestCase
 
     private
       def engine
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def assert_engine_class(actual)
@@ -250,7 +250,7 @@ class XMLMiniEngineTest < ActiveSupport::TestCase
       end
 
       def expansion_attack_error
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def extended_engine?

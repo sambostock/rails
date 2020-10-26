@@ -40,13 +40,13 @@ module ActiveJob
 
       # Deserializes an argument from a JSON primitive type.
       def deserialize(json)
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       private
         # The class of the object that will be serialized.
         def klass # :doc:
-          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+          raise NotImplementedError
         end
     end
   end

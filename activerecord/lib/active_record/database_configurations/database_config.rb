@@ -21,7 +21,7 @@ module ActiveRecord
       deprecate spec_name: "please use name instead"
 
       def config
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def adapter_method
@@ -29,43 +29,43 @@ module ActiveRecord
       end
 
       def host
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def database
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def _database=(database)
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def adapter
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def pool
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def checkout_timeout
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def reaping_frequency
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def idle_timeout
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def replica?
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def migrations_paths
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
 
       def for_current_env?
@@ -73,7 +73,7 @@ module ActiveRecord
       end
 
       def schema_cache_path
-        raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+        raise NotImplementedError
       end
     end
   end

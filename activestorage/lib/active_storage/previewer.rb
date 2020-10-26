@@ -21,7 +21,7 @@ module ActiveStorage
     # anything accepted by ActiveStorage::Attached::One#attach). Pass the additional options to
     # the underlying blob that is created.
     def preview(**options)
-      raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+      raise NotImplementedError
     end
 
     private

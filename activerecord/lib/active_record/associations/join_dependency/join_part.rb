@@ -42,7 +42,7 @@ module ActiveRecord
 
         # An Arel::Table for the active_record
         def table
-          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+          raise NotImplementedError
         end
 
         def extract_record(row, column_names_with_alias)

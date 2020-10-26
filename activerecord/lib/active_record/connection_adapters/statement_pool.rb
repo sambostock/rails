@@ -53,7 +53,7 @@ module ActiveRecord
         end
 
         def dealloc(stmt)
-          raise NotImplementedError, "USEFUL_MESSAGE_HERE"
+          raise NotImplementedError
         end
     end
   end
