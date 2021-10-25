@@ -42,8 +42,33 @@ class Rails::Command::RoutesTest < ActiveSupport::TestCase
   end
 
   test "rails routes with global search key" do
+    # https://github.com/rails/rails/blob/fb1ab3460a676ce7def0819c2e92289ef2dcbe3b/railties/test/isolation/abstract_unit.rb#L280
+    engine "weblog" do |weblog|
+      weblog.write "lib/weblog.rb", <<-RUBY
+        module Weblog
+          class Engine < ::Rails::Engine
+          end
+        end
+      RUBY
+
+      weblog.write "config/routes.rb", <<-RUBY
+        Weblog::Engine.routes.draw do
+          get '/weblog' => "weblogs#index", as: 'weblogs'
+        end
+      RUBY
+
+      weblog.write "app/controllers/weblogs_controller.rb", <<-RUBY
+        class WeblogsController < ActionController::Base
+          def index
+            render plain: request.url
+          end
+        end
+      RUBY
+    end
+
     app_file "config/routes.rb", <<-RUBY
       Rails.application.routes.draw do
+        mount Weblog::Engine, :at => '/', :as => 'weblog'
         get '/cart', to: 'cart#show'
         post '/cart', to: 'cart#create'
         get '/basketballs', to: 'basketball#index'
@@ -61,7 +86,7 @@ class Rails::Command::RoutesTest < ActiveSupport::TestCase
 rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
                                 GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
              rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
-    MESSAGE
+             MESSAGE
 
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "POST" ])
                                      Prefix Verb URI Pattern                                                            Controller#Action
@@ -81,6 +106,18 @@ rails_blob_representation_proxy GET  /rails/active_storage/representations/proxy
     assert_equal <<~MESSAGE, run_routes_command([ "-g", "basketballs" ])
            Prefix Verb URI Pattern            Controller#Action
       basketballs GET  /basketballs(.:format) basketball#index
+    MESSAGE
+
+
+    # FIXME: Remove this paragraph. Just to see what output is.
+    assert_equal <<~MESSAGE, run_routes_command([])
+           Prefix Verb URI Pattern            Controller#Action
+      ... whatever is expected from all routes
+    MESSAGE
+
+    assert_equal <<~MESSAGE, run_routes_command([ "-g", "weblog" ])
+           Prefix Verb URI Pattern            Controller#Action
+      ... whatever is expected from the weblog routes (copy from above)
     MESSAGE
   end
 
