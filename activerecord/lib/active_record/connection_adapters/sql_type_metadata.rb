@@ -27,12 +27,14 @@ module ActiveRecord
       alias eql? ==
 
       def hash
-        SqlTypeMetadata.hash ^
-          sql_type.hash ^
-          type.hash ^
-          limit.hash ^
-          precision.hash >> 1 ^
-          scale.hash >> 2
+        [
+          SqlTypeMetadata,
+          sql_type,
+          type,
+          limit,
+          precision, # TODO: Think about the >> 1 edge case here
+          scale, # TODO: Think about the >> 2 edge case here
+        ].hash
       end
 
       private

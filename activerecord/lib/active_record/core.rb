@@ -598,7 +598,7 @@ module ActiveRecord
       id = self.id
 
       if id
-        self.class.hash ^ id.hash
+        [self.class, id].hash
       else
         super
       end

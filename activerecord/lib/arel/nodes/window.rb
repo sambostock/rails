@@ -79,7 +79,7 @@ module Arel # :nodoc: all
       end
 
       def hash
-        super ^ @name.hash
+        [super, @name].hash # TODO: Think about this case, and consider that lower in this file does make use of Array#hash...
       end
 
       def eql?(other)

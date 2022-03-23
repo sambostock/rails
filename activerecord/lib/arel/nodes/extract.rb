@@ -11,7 +11,7 @@ module Arel # :nodoc: all
       end
 
       def hash
-        super ^ @field.hash
+        [super, @field].hash # TODO: Think about this case too...
       end
 
       def eql?(other)

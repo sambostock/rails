@@ -56,9 +56,11 @@ module ActiveRecord
         alias :eql? :==
 
         def hash
-          Column.hash ^
-            super.hash ^
-            serial?.hash
+          [
+            Column,
+            super, # TODO: Think about this edge case...
+            serial?,
+          ].hash
         end
       end
     end
