@@ -40,7 +40,7 @@ module ActiveModel
 
     def value
       # `defined?` is cheaper than `||=` when we get back falsy values
-      @value = type_cast(value_before_type_cast) unless defined?(@value)
+      @value = type_cast(value_before_type_cast(instance)) unless defined?(@value) # We don't have a ref to instance!
       @value
     end
 

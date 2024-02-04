@@ -14,6 +14,12 @@ module ActiveModel
       attribute :string_with_default, :string, default: "default string"
       attribute :date_field, :date, default: -> { Date.new(2016, 1, 1) }
       attribute :boolean_field, :boolean
+      attribute :string_with_instance_default, :string, default: ->(instance, attr) { instance.delegated_default_for(attr) }
+
+      private
+        def delegated_default_for(attr)
+          "#{attr.inspect} from #{self.class}"
+        end
     end
 
     class ChildModelForAttributesTest < ModelForAttributesTest
@@ -22,6 +28,11 @@ module ActiveModel
     class GrandchildModelForAttributesTest < ChildModelForAttributesTest
       attribute :integer_field, :string
       attribute :string_field, default: "default string"
+
+      private
+        def delegated_default_for(attr)
+          "#{attr.inspect} from #{self.class} (override)"
+        end
     end
 
     class ModelWithGeneratedAttributeMethods
@@ -102,7 +113,8 @@ module ActiveModel
         "decimal_field",
         "string_with_default",
         "date_field",
-        "boolean_field"
+        "boolean_field",
+        "string_with_instance_default"
       ]
 
       assert_equal names, ModelForAttributesTest.attribute_names
@@ -141,6 +153,13 @@ module ActiveModel
 
       assert_equal attributes, new_attributes
     end
+
+    test "attribute with proc defaults can delegate to instance, respecting inheritance" do
+      assert_equal ":string_with_instance_default from ModelForAttributesTest", ModelForAttributesTest.new.string_with_instance_default
+      assert_equal ":string_with_instance_default from ChildModelForAttributesTest", ChildModelForAttributesTest.new.string_with_instance_default
+      assert_equal ":string_with_instance_default from GrandchildModelForAttributesTest (override)", GrandchildModelForAttributesTest.new.string_with_instance_default
+    end
+
 
     test "attributes can be dup-ed" do
       data = ModelForAttributesTest.new

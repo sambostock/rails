@@ -14,9 +14,9 @@ module ActiveModel
         super(name, value, type, database_default)
       end
 
-      def value_before_type_cast
+      def value_before_type_cast(instance)
         if user_provided_value.is_a?(Proc)
-          @memoized_value_before_type_cast ||= user_provided_value.call
+          @memoized_value_before_type_cast ||= user_provided_value.call(instance, name)
         else
           @user_provided_value
         end
