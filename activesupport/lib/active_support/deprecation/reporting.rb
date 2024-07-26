@@ -87,7 +87,7 @@ module ActiveSupport
       #   end
       #   # => ActiveSupport::DeprecationException for dev/test, nil for production
       def allow(allowed_warnings = :all, if: true, &block)
-        conditional = binding.local_variable_get(:if)
+        conditional = { if: }[:if]
         conditional = conditional.call if conditional.respond_to?(:call)
         if conditional
           @explicitly_allowed_warnings.bind(allowed_warnings, &block)
